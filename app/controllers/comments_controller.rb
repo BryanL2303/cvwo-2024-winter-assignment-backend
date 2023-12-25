@@ -1,13 +1,13 @@
 class CommentsController < ApplicationController
-    def postcomment
+    def postComment
         render json: params
     end
 
-    def updatecomment
+    def updateComment
         render json: params
     end
 
-    def getcomments
+    def getComments
         render json: params
     end
 end

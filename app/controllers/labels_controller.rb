@@ -1,5 +1,5 @@
 class LabelsController < ApplicationController
-    def createlabel
+    def createLabel
         render json: params
     end
 end

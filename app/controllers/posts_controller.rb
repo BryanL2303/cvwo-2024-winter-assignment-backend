@@ -1,17 +1,17 @@
 class PostsController < ApplicationController
-    def createpost
+    def create
         render json: params
     end
 
-    def updatepost
+    def update
         render json: params
     end
 
-    def getpost
+    def show
         render json: params
     end
 
-    def deletepost
+    def delete
         render json: params
     end
 end
