@@ -19,7 +19,7 @@ class PostsController < ApplicationController
             render json: {status: 1, token: token}
         else
             datetime = DateTime.now
-            date = strftime("%d %B %Y")
+            date = datetime.strftime("%d %B %Y")
             post = Post.new(title: params[:title], description: params[:description], author: user.username, user_id: user.id, label_id: params[:label_id], date: date)
                 
             render json: {status: 0, post: post}
