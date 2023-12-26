@@ -22,12 +22,11 @@ class PostsController < ApplicationController
             date = datetime.strftime("%d %B %Y")
             post = Post.new(title: params[:title], description: params[:description], author: user.username, user_id: user.id, label_id: params[:label_id], date: date)
                 
-            render json: {status: 0, post: post}
-            #if post.save
-            #    render json: {status: 0, post: post}
-            #else
-            #    render json: {status: 2, error: user.errors.messages}
-            #end
+            if post.save
+                render json: {status: 0, post: post}
+            else
+                render json: {status: 2, error: user.errors.messages}
+            end
         end
     end
 
@@ -46,12 +45,12 @@ class PostsController < ApplicationController
     def getAllPosts
         posts = Post.all.order('id')
 
-        render json: {posts: posts}
+        render json: {status: 0, posts: posts}
     end
 
     def getPost
         post = Post.find_by(id: params[:id])
 
-        render json: {post: post}
+        render json: {status: 0, post: post}
     end
 end
