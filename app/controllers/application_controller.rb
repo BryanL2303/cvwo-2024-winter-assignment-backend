@@ -5,7 +5,7 @@ class ApplicationController < ActionController::API
 
 	def decode_token(token)
 		begin
-			JWT.decode(token, 'secretkey', true, algorithm: 'HS256')
+			JWT.decode(token, 'secretkey', true, algorithm: 'HS256')[0]['user_id']
 		rescue JWT::DecodeError
 			nil
 		end
