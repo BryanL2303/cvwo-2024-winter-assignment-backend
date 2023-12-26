@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-    def create
+    def createPost
         render json: params
     end
 
@@ -13,5 +13,10 @@ class PostsController < ApplicationController
 
     def delete
         render json: params
+    end
+
+    def getAllPosts
+        posts = Post.all.order('created_at')
+        render json: posts
     end
 end
