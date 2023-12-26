@@ -8,12 +8,12 @@ class UsersController < ApplicationController
     # 0 - success
     # 1 - account username already exists
     # 2 - error interacting with database
-    def signup
-        user = User.new(username: params[:username], password: params[:password])
+    def signup        
 		findUser = User.find_by(username: params[:username])
 
 		if findUser == nil
-			if user.save
+			user = User.new(username: params[:username], password: params[:password])
+            if user.save
 				token = encode_token({user_id: user.id})
 				render json: {status: 0, token: token}
 			else
