@@ -34,9 +34,9 @@ class UsersController < ApplicationController
     # 
     # On success also renders JWT
     def login
-        findUser = User.find_by(username: params[:username])
+        user = User.find_by(username: params[:username])
 
-		if findUser == nil
+		if user == nil
 			render json: {status: 1}
 		else
 			if user['password'] == params[:password]
