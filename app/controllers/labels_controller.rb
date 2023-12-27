@@ -5,5 +5,7 @@ class LabelsController < ApplicationController
 
     def getLabels
         labels = Label.all.order('label_name')
+
+        render json: {status: 0, labels: labels}
     end
 end
