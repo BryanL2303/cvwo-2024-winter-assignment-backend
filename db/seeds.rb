@@ -12,64 +12,53 @@ check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Movies")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Games")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Travel")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Food")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Pets")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Finance")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Music")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Hobbies")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Lifestyle")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
 label = Label.new(label_name: "Work")
 check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
-label.save
