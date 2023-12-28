@@ -46,7 +46,7 @@ class PostsController < ApplicationController
     end
 
     def getAllPosts
-        posts = Post.all.order('id')
+        posts = Post.includes(:labels).all.order('id')
 
         render json: {status: 0, posts: posts}
     end
