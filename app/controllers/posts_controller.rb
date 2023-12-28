@@ -52,7 +52,7 @@ class PostsController < ApplicationController
     end
 
     def getPost
-        post = Post.find_by(id: params[:id])
+        post = Post.find_by(id: params[:id].to_i)
 
         render json: {status: 0, post: post}
     end
