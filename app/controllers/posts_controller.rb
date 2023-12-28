@@ -20,9 +20,13 @@ class PostsController < ApplicationController
         else
             datetime = DateTime.now
             date = datetime.strftime("%d %B %Y")
-            post = Post.new(title: params[:title], description: params[:description], author: user.username, user_id: user.id, label_id: params[:label_id], date: date)
+            post = Post.new(title: params[:title], description: params[:description], author: user.username, user_id: user.id, date: date)
                 
             if post.save
+                for labelId in params[:labels]
+                    postLabel = PostLabel.new(post_id: post.id, label_id: labelId)
+                    postLabel.save
+                end
                 render json: {status: 0, post: post}
             else
                 render json: {status: 2, error: user.errors.messages}

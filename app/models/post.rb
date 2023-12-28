@@ -1,4 +1,4 @@
 class Post < ApplicationRecord
     belongs_to :user
-	belongs_to :label, optional: true
+	has_and_belongs_to_many :label, join_table: 'post_labels'
 end
