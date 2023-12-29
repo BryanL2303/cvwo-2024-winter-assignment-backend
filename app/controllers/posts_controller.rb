@@ -23,7 +23,7 @@ class PostsController < ApplicationController
                 
             if post.save
                 for labelId in params[:labels]
-                    postLabel = PostLabels.new(post_id: post.id, label_id: labelId)
+                    postLabel = PostLabel.new(post_id: post.id, label_id: labelId)
                     postLabel.save
                 end
                 render json: {status: 0, post: post}
