@@ -1,3 +1,4 @@
 class Label < ApplicationRecord
-    has_many :posts, through: :post_label
+    has_mane :post_labels
+    has_many :posts, through: :post_labels
 end
