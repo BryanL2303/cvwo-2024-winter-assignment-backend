@@ -8,4 +8,10 @@ class LabelsController < ApplicationController
 
         render json: {status: 0, labels: labels}
     end
+
+    def getPostsByLabels
+        posts = Label.find_by(id: params[:id]).posts
+
+        render json: {status: 0, posts: posts}
+    end
 end
