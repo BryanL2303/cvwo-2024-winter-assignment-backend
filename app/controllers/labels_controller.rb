@@ -12,6 +12,12 @@ class LabelsController < ApplicationController
     def getPostsByLabels
         posts = Label.find_by(id: params[:id]).posts
 
-        render json: {status: 0, posts: posts}
+        labels = {}
+
+        for post in posts
+            labels[post.id] = post.labels
+        end
+
+        render json: {status: 0, posts: posts, labels: labels}
     end
 end
