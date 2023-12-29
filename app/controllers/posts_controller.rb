@@ -49,7 +49,7 @@ class PostsController < ApplicationController
         #posts = Post.all.joins(:labels).order('id')
         posts = Post.all.order('id')
 
-        render json: {status: 0, posts: posts}
+        render json: {status: 0, posts: posts, labels: posts.labels}
     end
 
     def getPost
