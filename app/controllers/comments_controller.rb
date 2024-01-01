@@ -74,7 +74,7 @@ class CommentsController < ApplicationController
 
         for comment in comments
             childComments = Comment.find_by(parent_comment_id: comment.id)
-            comment.hasChild = (childComments != nil)
+            comment['hasChild'] = (childComments != nil)
         end
 
         render json: {status: 0, comments: comments}
