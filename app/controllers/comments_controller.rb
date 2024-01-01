@@ -16,9 +16,9 @@ class CommentsController < ApplicationController
             render json: {status: 1}
         else
             if params[:variant] == "post"
-                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:id], parent_comment_id: null)
+                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:id])
             elsif params[:variant] == "comment"
-                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: null, parent_comment_id: params[:id])
+                comment = Comment.new(user_id: user.id, comment: params[:comment], parent_comment_id: params[:id])
             else
                 render json: {status: 2, error: comment.errors.messages}
             end
