@@ -57,11 +57,17 @@ class CommentsController < ApplicationController
     # 0 - success
     # 2 - problem with database
     def getComments
-        comments = Comment.find_by(post_id: params[:post_id])
+        comments = []
+        if params[:variant] == "post"
+            comments = Comment.find_by(post_id: params[:id])
+        end
+        if params[:variant] == "comment"
+            comments = Comment.find_by(parent_comment_id: params[:id])
+        end
 
         for comment in comments
             childComments = Comment.find_by(parent_comment_id: comment.id)
-            comment.child = childComments
+            comment.hasChild = (childComments != null)
         end
 
         render json: {status: 0, comments: comments}
