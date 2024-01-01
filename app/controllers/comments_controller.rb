@@ -66,10 +66,10 @@ class CommentsController < ApplicationController
     def getComments
         comments = []
         if params[:variant] == "post"
-            comments = Comment.find_by(post_id: params[:id])
+            comments = Comment.where(post_id: params[:id])
         end
         if params[:variant] == "comment"
-            comments = Comment.find_by(parent_comment_id: params[:id])
+            comments = Comment.where(parent_comment_id: params[:id])
         end
 
         for comment in comments
