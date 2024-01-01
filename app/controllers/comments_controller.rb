@@ -15,13 +15,20 @@ class CommentsController < ApplicationController
         if user == nil
             render json: {status: 1}
         else
-            comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:post_id], parent_comment_id: params[:parent_comment_id])
-                
+            if params[:variant] == "post"
+                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:id], parent_comment_id: null)
+            elsif params[:variant] == "comment"
+                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: null, parent_comment_id: params[:id])
+            else
+                render json: {status: 2, error: comment.errors.messages}
+            end
+
             if comment.save
                 render json: {status: 0, comment: comment}
             else
                 render json: {status: 2, error: comment.errors.messages}
             end
+
         end
     end
 
