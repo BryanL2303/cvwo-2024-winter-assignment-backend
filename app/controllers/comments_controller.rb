@@ -72,7 +72,7 @@ class CommentsController < ApplicationController
             comments = Comment.where(parent_comment_id: params[:id])
         end
 
-        hasChild {}
+        hasChild = {}
 
         for comment in comments
             childComments = Comment.find_by(parent_comment_id: comment.id)
