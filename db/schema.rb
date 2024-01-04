@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_25_105645) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_04_133239) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_105645) do
     t.string "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "author"
+    t.string "date"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -31,16 +33,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_25_105645) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "post_labels", force: :cascade do |t|
+    t.bigint "post_id"
+    t.bigint "label_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["label_id"], name: "index_post_labels_on_label_id"
+    t.index ["post_id"], name: "index_post_labels_on_post_id"
+  end
+
   create_table "posts", force: :cascade do |t|
     t.bigint "user_id"
-    t.bigint "label_id"
     t.string "title"
     t.string "description"
     t.string "date"
     t.string "author"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["label_id"], name: "index_posts_on_label_id"
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
