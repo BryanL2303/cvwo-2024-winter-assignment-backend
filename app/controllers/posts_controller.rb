@@ -49,7 +49,13 @@ class PostsController < ApplicationController
     def getPost
         post = Post.find_by(id: params[:id].to_i)
 
-        render json: {status: 0, post: post}
+        labels = []
+
+        for label in post.labels
+            labels = [...labels, label.id]
+        end
+
+        render json: {status: 0, post: post, labels: labels}
     end
 
     def updatePost
@@ -65,6 +71,13 @@ class PostsController < ApplicationController
                 date = datetime.strftime("%d %B %Y")
                 post.description = "[Edited " + date + "] \n" + params[:description]
                 if post.save
+                    labels = PostLabel.where(post_id: post.id)
+                    labels.destroy_all
+                    for labelId in params[:labels]
+                        postLabel = PostLabel.new(post_id: post.id, label_id: labelId)
+                        postLabel.save
+                    end
+
                     render json: {status: 0}
                 else
                     render json: {status: 2}
