@@ -56,18 +56,22 @@ class PostsController < ApplicationController
         post = Post.find_by(id: params[:id].to_i)
 
         user = authorised_user(params[:token])
-        if user.id == post.user_id
-            post.title = params[:title]
-            datetime = DateTime.now
-            date = datetime.strftime("%d %B %Y")
-            post.description = "[Edited " + date + "] \n" + params[:description]
-            if post.save
-                render json: {status: 0}
-            else
-                render json: {status: 2}
-            end
-        else
+        if user == nil
             render json: {status: 1}
+        else
+            if user.id == post.user_id
+                post.title = params[:title]
+                datetime = DateTime.now
+                date = datetime.strftime("%d %B %Y")
+                post.description = "[Edited " + date + "] \n" + params[:description]
+                if post.save
+                    render json: {status: 0}
+                else
+                    render json: {status: 2}
+                end
+            else
+                render json: {status: 1}
+            end
         end
     end
 
@@ -75,16 +79,20 @@ class PostsController < ApplicationController
         post = Post.find_by(id: params[:id].to_i)
 
         user = authorised_user(params[:token])
-        if user.id == post.user_id
-            comments = Comment.where(post_id: post.id)
-            comments.destroy_all
-            if post.destroy
-                render json: {status: 0}
-            else
-                render json: {status: 2}
-            end
-        else
+        if user == nil
             render json: {status: 1}
+        else
+            if user.id == post.user_id
+                comments = Comment.where(post_id: post.id)
+                comments.destroy_all
+                if post.destroy
+                    render json: {status: 0}
+                else
+                    render json: {status: 2}
+                end
+            else
+                render json: {status: 1}
+            end
         end
     end
 end

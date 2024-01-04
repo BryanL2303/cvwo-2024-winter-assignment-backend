@@ -49,16 +49,20 @@ class CommentsController < ApplicationController
         user = authorised_user(params[:token])
         comment = Comment.find_by(id: params[:id])
 
-        if user.id != comment.user_id
+        if user == nil
             render json: {status: 1}
         else
-            datetime = DateTime.now
-            date = datetime.strftime("%d %B %Y")
-            comment.comment = "[Edited " + date + "] \n" + params[:updates]
-            if comment.save
-                render json: {status: 0, comment: comment}
+            if user.id != comment.user_id
+                render json: {status: 1}
             else
-                render json: {status: 2, error: comment.errors.messages}
+                datetime = DateTime.now
+                date = datetime.strftime("%d %B %Y")
+                comment.comment = "[Edited " + date + "] \n" + params[:updates]
+                if comment.save
+                    render json: {status: 0, comment: comment}
+                else
+                    render json: {status: 2, error: comment.errors.messages}
+                end
             end
         end
     end
@@ -92,14 +96,18 @@ class CommentsController < ApplicationController
         user = authorised_user(params[:token])
         comment = Comment.find_by(id: params[:id])
 
-        if user.id != comment.user_id
+        if user == nil
             render json: {status: 1}
         else
-            comment.comment = "[deleted]"
-            if comment.save
-                render json: {status: 0, comment: comment}
+            if user.id != comment.user_id
+                render json: {status: 1}
             else
-                render json: {status: 2, error: comment.errors.messages}
+                comment.comment = "[deleted]"
+                if comment.save
+                    render json: {status: 0, comment: comment}
+                else
+                    render json: {status: 2, error: comment.errors.messages}
+                end
             end
         end
     end
