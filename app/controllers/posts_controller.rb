@@ -52,7 +52,7 @@ class PostsController < ApplicationController
         labels = []
 
         for label in post.labels
-            labels = [...labels, label.id]
+            labels.append(label.id)
         end
 
         render json: {status: 0, post: post, labels: labels}
