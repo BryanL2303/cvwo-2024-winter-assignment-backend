@@ -69,6 +69,7 @@ class CommentsController < ApplicationController
 
     # Retrieve all comments for a post:
     # post_id: string
+    # variant: string {post || comment}
     # 
     # Backend should respond with status:
     # 0 - success

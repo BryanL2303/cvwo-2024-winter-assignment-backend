@@ -15,7 +15,7 @@ class PostsController < ApplicationController
         user = authorised_user(params[:token])
 
         if user == nil
-            render json: {status: 1, token: token}
+            render json: {status: 1}
         else
             datetime = DateTime.now
             date = datetime.strftime("%d %B %Y")
@@ -80,7 +80,7 @@ class PostsController < ApplicationController
 
                     render json: {status: 0}
                 else
-                    render json: {status: 2}
+                    render json: {status: 2, error: post.errors.messages}
                 end
             else
                 render json: {status: 1}
