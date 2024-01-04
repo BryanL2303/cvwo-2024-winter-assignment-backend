@@ -33,18 +33,6 @@ class PostsController < ApplicationController
         end
     end
 
-    def update
-        render json: params
-    end
-
-    def show
-        render json: params
-    end
-
-    def delete
-        render json: params
-    end
-
     def getAllPosts
         #posts = Post.all.joins(:labels).order('id')
         posts = Post.includes(:labels).all.order('id')
@@ -62,5 +50,41 @@ class PostsController < ApplicationController
         post = Post.find_by(id: params[:id].to_i)
 
         render json: {status: 0, post: post}
+    end
+
+    def updatePost
+        post = Post.find_by(id: params[:id].to_i)
+
+        user = authorised_user(params[:token])
+        if user.id == post.user_id
+            post.title = params[:title]
+            datetime = DateTime.now
+            date = datetime.strftime("%d %B %Y")
+            post.description = "[Edited " + date + "] \n" + params[:description]
+            if post.save
+                render json: {status: 0}
+            else
+                render json: {status: 2}
+            end
+        else
+            render json: {status: 1}
+        end
+    end
+
+    def deletePost
+        post = Post.find_by(id: params[:id].to_i)
+
+        user = authorised_user(params[:token])
+        if user.id == post.user_id
+            comments = Comment.where(post_id: post.id)
+            comments.destroy_all
+            if post.destroy
+                render json: {status: 0}
+            else
+                render json: {status: 2}
+            end
+        else
+            render json: {status: 1}
+        end
     end
 end

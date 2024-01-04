@@ -62,3 +62,12 @@ check = Label.find_by(label_name: label.label_name)
 if check == nil
     label.save
 end
+
+posts = Post.all
+posts.destroy_all
+
+comments = Comment.all
+comments.destroy_all
+
+postLabels = PostLabels.all
+postLabels.destroy_all

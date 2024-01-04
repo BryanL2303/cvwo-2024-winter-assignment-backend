@@ -7,8 +7,11 @@ Rails.application.routes.draw do
   post "/create_post" => "posts#createPost"
   post "/get_posts" => "posts#getAllPosts"
   post "/get_post" => "posts#getPost"
+  post "/updatePost" => "posts#updatePost"
+  post "/deletePost" => "posts#deletePost"
   post "/get_posts_by_labels" => "labels#getPostsByLabels"
   post "/post_comment" => "comments#postComment"
-  post "/update_comment" => "comments#updatecomment"
+  post "/update_comment" => "comments#updateComment"
   post "/get_comments" => "comments#getComments"
+  post "/delete_comment" => "comments#deleteComment"
 end

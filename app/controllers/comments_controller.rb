@@ -1,3 +1,5 @@
+require 'date'
+
 class CommentsController < ApplicationController
     # Create new comment with parameters:
     # token: string
@@ -18,7 +20,7 @@ class CommentsController < ApplicationController
             if params[:variant] == "post"
                 comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:id])
             elsif params[:variant] == "comment"
-                comment = Comment.new(user_id: user.id, comment: params[:comment], parent_comment_id: params[:id])
+                comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:post_id], parent_comment_id: params[:id])
             else
                 render json: {status: 2, error: comment.errors.messages}
             end
@@ -48,7 +50,9 @@ class CommentsController < ApplicationController
         if user.id != comment.user_id
             render json: {status: 1}
         else
-            comment.comment = comment.comment + "\nedited: \n" + params[:updates]
+            datetime = DateTime.now
+            date = datetime.strftime("%d %B %Y")
+            comment.comment = "[Edited " + date + "] \n" + params[:updates]
             if comment.save
                 render json: {status: 0, comment: comment}
             else
@@ -66,7 +70,7 @@ class CommentsController < ApplicationController
     def getComments
         comments = []
         if params[:variant] == "post"
-            comments = Comment.where(post_id: params[:id])
+            comments = Comment.where(post_id: params[:id], parent_comment_id: nil)
         end
         if params[:variant] == "comment"
             comments = Comment.where(parent_comment_id: params[:id])
@@ -80,5 +84,21 @@ class CommentsController < ApplicationController
         end
 
         render json: {status: 0, comments: comments, hasChild: hasChild}
+    end
+
+    def deleteComment
+        user = authorised_user(params[:token])
+        comment = Comment.find_by(id: params[:id])
+
+        if user.id != comment.user_id
+            render json: {status: 1}
+        else
+            comment.comment = "[deleted]"
+            if comment.save
+                render json: {status: 0, comment: comment}
+            else
+                render json: {status: 2, error: comment.errors.messages}
+            end
+        end
     end
 end
