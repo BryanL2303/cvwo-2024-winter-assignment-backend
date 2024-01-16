@@ -8,7 +8,19 @@ https://github.com/BryanL2303/cvwo-2024-winter-assignment-frontend
 
 The frontend is not deployed yet, refer to the README in the frontend for guide to setup.
 
-# Documentation
+# Setting up in development
+
+Install the project locally
+Install postgresql
+Rename `.env.example` file to `.env`
+Edit .env file with username and password to local postgres database
+Run the following commands:
+### `bundle`
+### `rails db:create`
+### `rails db:migrate`
+### `rails s`
+
+# Documentation for API
 
 ## post "/signup" => "users#signup"
 
