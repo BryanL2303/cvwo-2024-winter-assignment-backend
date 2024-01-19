@@ -14,6 +14,8 @@ Install the project locally
 Install postgresql
 Rename `.env.example` file to `.env`
 Edit .env file with username and password to local postgres database
+Open `application.rb` file in `/config`
+Uncomment the line `#Dotenv::Railtie.load` by removing `#`
 Run the following commands:
 ### `bundle`
 ### `rails db:create`
