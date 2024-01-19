@@ -5,21 +5,15 @@ class UsersController < ApplicationController
   	#
   	# renders: 
   	# 0 - success
-  	# 1 - account username already exists
-  	# 2 - error interacting with database
+  	# 1 - error interacting with database
   	def signup        
-		findUser = User.find_by(username: params[:username])
-
-		if findUser == nil
-			user = User.new(username: params[:username], password: params[:password])
-            if user.save
-				token = encode_token({user_id: user.id})
-				render json: {status: 0, token: token}
-			else
-				render json: {status: 2, error: user.errors.messages}
-			end
+		user = User.new(username: params[:username], password: params[:password])
+        if user.valid?
+			user.save
+			token = encode_token({user_id: user.id})
+			render json: {status: 0, token: token}
 		else
-			render json: {status: 1}
+			render json: {status: 1, error: user.errors.messages}
 		end
 	end
 

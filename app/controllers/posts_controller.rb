@@ -21,14 +21,15 @@ class PostsController < ApplicationController
             date = datetime.strftime("%d %B %Y")
             post = Post.new(title: params[:title], description: params[:description], author: user.username, user_id: user.id, date: date)
                 
-            if post.save
+            if post.valid?
+                post.save
                 for labelId in params[:labels]
                     postLabel = PostLabel.new(post_id: post.id, label_id: labelId)
                     postLabel.save
                 end
                 render json: {status: 0, post: post}
             else
-                render json: {status: 2, error: user.errors.messages}
+                render json: {status: 2, error: post.errors.messages}
             end
         end
     end
@@ -70,7 +71,8 @@ class PostsController < ApplicationController
                 datetime = DateTime.now
                 date = datetime.strftime("%d %B %Y")
                 post.description = "[Edited " + date + "] \n" + params[:description]
-                if post.save
+                if post.valid?
+                    post.save
                     labels = PostLabel.where(post_id: post.id)
                     labels.destroy_all
                     for labelId in params[:labels]

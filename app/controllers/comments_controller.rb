@@ -24,10 +24,11 @@ class CommentsController < ApplicationController
             elsif params[:variant] == "comment"
                 comment = Comment.new(user_id: user.id, comment: params[:comment], post_id: params[:post_id], parent_comment_id: params[:id], author: user.username, date: date)
             else
-                render json: {status: 2, error: comment.errors.messages}
+                render json: {status: 2, error: "The variant should either be 'post' or 'comment'"}
             end
 
-            if comment.save
+            if comment.valid?
+                comment.save
                 render json: {status: 0, comment: comment}
             else
                 render json: {status: 2, error: comment.errors.messages}
@@ -58,7 +59,8 @@ class CommentsController < ApplicationController
                 datetime = DateTime.now
                 date = datetime.strftime("%d %B %Y")
                 comment.comment = "[Edited " + date + "] \n" + params[:updates]
-                if comment.save
+                if comment.valid?
+                    comment.save
                     render json: {status: 0, comment: comment}
                 else
                     render json: {status: 2, error: comment.errors.messages}
@@ -104,7 +106,8 @@ class CommentsController < ApplicationController
                 render json: {status: 1}
             else
                 comment.comment = "[deleted]"
-                if comment.save
+                if comment.valid?
+                    comment.save
                     render json: {status: 0, comment: comment}
                 else
                     render json: {status: 2, error: comment.errors.messages}
