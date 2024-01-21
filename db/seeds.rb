@@ -69,5 +69,5 @@ posts.destroy_all
 comments = Comment.all
 comments.destroy_all
 
-postLabels = PostLabels.all
+postLabels = PostLabel.all
 postLabels.destroy_all
