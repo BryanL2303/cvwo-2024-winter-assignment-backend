@@ -3,9 +3,16 @@
 default: &default
   adapter: postgresql
   encoding: unicode
+  host: db
+  username: <%= Rails.application.credentials.dig(:db, :username) %>
+  password: <%= Rails.application.credentials.dig(:db, :password) %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+#  adapter: postgresql
+#  encoding: unicode
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
-  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+#  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
   <<: *default
