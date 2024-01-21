@@ -1,26 +1,40 @@
 # README
 
-Backend for web forum hosted on Heroku.
+Backend for web forum hosted on Heroku with docker.
 Ruby on Rails with Postgresql database.
 
 Frontend can be found through the following link:
 https://github.com/BryanL2303/cvwo-2024-winter-assignment-frontend
 
-The frontend is not deployed yet, refer to the README in the frontend for guide to setup.
+The frontend is deployed, refer to the link below:
+https://cvwo-web-forum-frontend-a8f77debc888.herokuapp.com/
 
-# Setting up in development
+# Setting up on local machine
 
 Install the project locally
-Install postgresql
 Rename `.env.example` file to `.env`
-Edit .env file with username and password to local postgres database
-Open `application.rb` file in `/config`
-Uncomment the line `#Dotenv::Railtie.load` by removing `#`
-Run the following commands:
-### `bundle`
-### `rails db:create`
-### `rails db:migrate`
-### `rails s`
+Open .env file and fill in the fields
+Run the following commands to set up in production environment:
+### `docker-compose build`
+### `docker-compose run rails bin/rails db:migrate`
+### `docker-compose run rails bin/rails db:seed`
+### `docker-compose up`
+
+The backend API should now be listening on port 3000
+
+To stop the server run:
+### `docker-compose down`
+
+To reset the database (delete the current volume) run:
+### `docker-compose down -v`
+Doing so will mean that user needs to re run migration and seed
+
+# Deployment on Heroku with Docker
+
+This project is up and running as a container on Heroku with container stack
+
+Heroku stack can be switched from Heroku-22 with the following command:
+### `heroku stack:set container --app [name of app on Heroku]`
 
 # Documentation for API
 
@@ -210,6 +224,5 @@ renders:
 # Project Status
 
 Further improvements to be made:
-1. Validate parameters before performing actions, return error otherwise
-2. Filling in missing documentations for each function in the controllers
-3. Instead of using post request for everything switch to get for unnecessary requests.
+1. Filling in missing documentations for each function in the controllers
+2. Instead of using post request for everything switch to get for unnecessary requests.
