@@ -41,26 +41,29 @@ Heroku stack can be switched from Heroku-22 with the following command:
 ## post "/signup" => "users#signup"
 
 params: 
+
     username: string
     password: string
 
 renders: 
+
   	status: {
         0 - success
-        1 - account username already exists
-        2 - error interacting with database
+        1 - unknown error
     }
     token: string (Only for status === 0)
-    error: string (Only for status === 2)
+    error: {[key:string]: string[]} (Only for status === 1)
 
 
 ## post "/login" => "users#login"
 
 params: 
+
     username: string
     password: string
 
 renders: 
+
   	status: {
         0 - success
         1 - username/password is wrong
@@ -70,9 +73,11 @@ renders:
 ## post "/auto_login" => "users#autoLogin"
 
 params: 
+
     token: string
 
 renders: 
+
   	status: {
         0 - success
         1 - token is unauthorised
@@ -82,6 +87,7 @@ renders:
 ## post "/get_labels" => "labels#getLabels"
 
 renders: 
+
   	status: {
         0 - success
     }
@@ -90,9 +96,11 @@ renders:
 ## post "/get_posts_by_labels" => "labels#getPostsByLabels"
 
 params:
+
     id: string (id of the label)
 
 renders: 
+
   	status: {
         0 - success
     }
@@ -102,23 +110,26 @@ renders:
 ## post "/create_post" => "posts#createPost"
 
 params:
+
     token: string
     title: string
     labels: string[] < contains id of labels
     description: string
 
 renders:
+
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - post is not valid
     }
     post: post (Only for status === 0)
-    error: string (Only for status === 2)
+    error: {[key:string]: string[]} (Only for status === 2)
 
 ## post "/get_posts" => "posts#getAllPosts"
 
-renders: 
+renders:
+
   	status: {
         0 - success
     }
@@ -127,7 +138,8 @@ renders:
 
 ## post "/get_post" => "posts#getPost"
 
-renders: 
+renders:
+
   	status: {
         0 - success
     }
@@ -137,6 +149,7 @@ renders:
 ## post "/update_post" => "posts#updatePost"
 
 params:
+
     id: string < id of post to update
     token: string
     title: string
@@ -144,64 +157,74 @@ params:
     description: string
 
 renders:
+
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - post is not valid
     }
-    error: string (Only for status === 2)
+    error: {[key:string]: string[]} (Only for status === 2)
 
 ## post "/delete_post" => "posts#deletePost"
 
 params:
+
     id: string < id of post to delete
     token: string
 
 renders:
+    
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - unknown error
     }
 
 ## post "/post_comment" => "comments#postComment"
 
+
 params:
+
     variant: string < "post" || "comment"
     id: string < id of comment/post depending on variant
     token: string
     comment: string
 
 renders:
+    
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - comment is not valid
     }
-    error: string (Only for status === 2)
+    error: {[key:string]: string[]} (Only for status === 2)
 
 ## post "/update_comment" => "comments#updateComment"
 
 params:
+
     id: string < id of comment to update
     token: string
     updates: string < updated comment
 
 renders:
+
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - comment is not valid
     }
-    error: string (Only for status === 2)
+    error: {[key:string]: string[]} (Only for status === 2)
 
 ## post "/get_comments" => "comments#getComments"
 
 params:
+
     variant: string < "post" || "comment"
     id: string < id of comment/post depending on variant
 
 renders:
+
     status: {
         0 - success
     }
@@ -211,18 +234,16 @@ renders:
 ## post "/delete_comment" => "comments#deleteComment"
 
 params:
+
     id: string < id of comment to delete
     token: string
 
 renders:
+
     status: {
         0 - success
         1 - token is not authorized
-        2 - problem with database
+        2 - unknown error
     }
 
-# Project Status
-
-Further improvements to be made:
-1. Filling in missing documentations for each function in the controllers
-2. Instead of using post request for everything switch to get for unnecessary requests.
+    error: {[key:string]: string[]} (Only for status === 2)
