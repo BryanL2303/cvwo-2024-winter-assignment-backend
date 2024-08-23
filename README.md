@@ -6,9 +6,6 @@ Ruby on Rails with Postgresql database.
 Frontend can be found through the following link:
 https://github.com/BryanL2303/cvwo-2024-winter-assignment-frontend
 
-The frontend is deployed, refer to the link below:
-https://cvwo-web-forum-frontend-a8f77debc888.herokuapp.com/
-
 # Setting up on local machine
 
 Install the project locally
